@@ -7,7 +7,7 @@ admin/uploads/
 assets/images/
 
 # Ignore database dumps
-sql/*.sql
+# sql/*.sql
 
 # Ignore OS and IDE files
 .DS_Store
