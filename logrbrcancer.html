@@ -1,0 +1,86 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+# Load dataset (Example: Breast Cancer dataset from sklearn)
+from sklearn.datasets import load_breast_cancer
+data = load_breast_cancer()
+df = pd.DataFrame(data.data, columns=data.feature_names)
+df['target'] = data.target
+
+# Select a few columns to display along with target
+columns_to_display = ['mean radius', 'mean texture', 'mean perimeter', 'mean area', 'target']
+print("Sample rows from the dataset:")
+print(df[columns_to_display].head())
+
+# Print total samples and class distribution
+total_samples = len(df)
+class_counts = df['target'].value_counts()
+print("\nDataset Summary:")
+print(f"Total samples: {total_samples}")
+for cls, count in class_counts.items():
+    percentage = (count / total_samples) * 100
+    print(f"Class {cls}: {count} samples ({percentage:.2f}%)")
+
+# Splitting data into features and target
+X = df.drop(columns=['target'])
+y = df['target']
+
+# Splitting into training and testing sets while maintaining class distribution
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+
+# Standardizing the features to ensure optimal model performance
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Set a default regularization strength (C value)
+C_value = 1.0  # Default regularization strength
+
+# Train Logistic Regression model with L2 regularization
+model = LogisticRegression(penalty='l2', C=C_value, solver='liblinear')
+model.fit(X_train, y_train)
+
+# Evaluate model performance on training and test sets
+train_accuracy = accuracy_score(y_train, model.predict(X_train))
+test_accuracy = accuracy_score(y_test, model.predict(X_test))
+
+# Print accuracy results
+print(f'\nTraining Accuracy: {train_accuracy:.4f}')
+print(f'Test Accuracy: {test_accuracy:.4f}')
+
+# TODO: Uncomment the code below the dashed line to test different regularization strengths in a loop
+# and visualize the effect of regularization on training and test accuracy.
+
+# Loop through different regularization strengths and store accuracies
+# ------------------------------------
+
+C_values = np.logspace(-3, 3, 10)  # Regularization strengths from 0.001 to 1000
+train_accuracies = []
+test_accuracies = []
+
+for C in C_values:
+    model = LogisticRegression(penalty='l2', C=C, solver='liblinear')
+    model.fit(X_train, y_train)
+    
+    train_acc = accuracy_score(y_train, model.predict(X_train))
+    test_acc = accuracy_score(y_test, model.predict(X_test))
+    
+    train_accuracies.append(train_acc)
+    test_accuracies.append(test_acc)
+
+# Plot training vs. test accuracies
+plt.figure(figsize=(8, 5))
+plt.plot(C_values, train_accuracies, marker='o', label='Training Accuracy')
+plt.plot(C_values, test_accuracies, marker='s', label='Test Accuracy')
+plt.xscale('log')
+plt.xlabel('Regularization Strength (C)')
+plt.ylabel('Accuracy')
+plt.title('Effect of Regularization on Logistic Regression')
+plt.legend()
+plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+plt.show()
