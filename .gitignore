@@ -1,0 +1,36 @@
+# Ignore environment files
+.env
+
+# Ignore uploads and generated images
+uploads/
+admin/uploads/
+assets/images/
+
+# Ignore database dumps
+sql/*.sql
+
+# Ignore OS and IDE files
+.DS_Store
+Thumbs.db
+*.log
+
+# Ignore node_modules if present
+node_modules/
+
+# Ignore composer dependencies if present
+vendor/
+
+# Ignore cache and temp files
+*.cache
+*.tmp
+
+# Ignore SASS/SCSS cache
+.sass-cache/
+
+# Ignore backup files
+*.bak
+*.swp
+
+# Ignore PHPStorm and VSCode folders
+.idea/
+.vscode/
