@@ -1,0 +1,19 @@
+Font Licenses:
+
+1. Playfair Display
+   License: Open Font License (OFL)
+   Source: https://fonts.google.com/specimen/Playfair+Display
+   Copyright: Claus Eggers Sørensen
+
+2. Inter
+   License: Open Font License (OFL)
+   Source: https://fonts.google.com/specimen/Inter
+   Copyright: Rasmus Andersson
+
+3. Cormorant Garamond
+   License: Open Font License (OFL)
+   Source: https://fonts.google.com/specimen/Cormorant+Garamond
+   Copyright: Christian Thalmann
+
+All fonts are licensed under the SIL Open Font License, Version 1.1.
+This license is available at: https://scripts.sil.org/OFL
